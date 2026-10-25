@@ -1,0 +1,1286 @@
+{
+  "generatedAt": "2026-10-25T18:54:46.429Z",
+  "docId": "WP-SYNTHOBS-WAVE-NODE-MATHEMATICS-EGS-2026-10-24",
+  "registryId": "synthobs-wave-node-mathematics-2026-10",
+  "seed": 20261024,
+  "engineShelfSlot": 49,
+  "results": {
+    "docId": "WP-SYNTHOBS-WAVE-NODE-MATHEMATICS-EGS-2026-10-24",
+    "registryId": "synthobs-wave-node-mathematics-2026-10",
+    "seed": 20261024,
+    "engineShelfSlot": 49,
+    "honesty": "Wave–Node Mathematics lab: analytical/numerical fixtures for node placement, 1D FDTD wave PDE, Kuramoto phase sync, and 2D point-navigation planning. Phase is a foundational steering/coordination delta on local ascent (matched ablation), not expected to beat A* on global path length. Not physical robot hardware, not manipulator benchmarks, not a finished Wave–Node Robotics product. Φ_EGS is catalog nesting grammar only.",
+    "lab": {
+      "seed": 20261024,
+      "runtimeMs": 1140.666875,
+      "A": {
+        "family": "A",
+        "title": "Node placement and geometric reconstruction",
+        "cases": [
+          {
+            "id": "A1",
+            "label": "Regular 2D lattice",
+            "nodeCount": 20,
+            "expectNodes": 20,
+            "edgeCount": 31,
+            "expectEdges": 31,
+            "maxCoordErr": 0,
+            "meanCoordErr": 0,
+            "pass": true
+          },
+          {
+            "id": "A2",
+            "label": "Regular polygon / circle",
+            "n": 12,
+            "maxCoordErr": 0,
+            "meanCoordErr": 0,
+            "rotationRadiusMaxDev": 2.220446049250313e-16,
+            "scaleRadiusMaxDev": 8.881784197001252e-16,
+            "pass": true
+          },
+          {
+            "id": "A3",
+            "label": "Constrained circle min-separation",
+            "chord": 0.7653668647301796,
+            "feasible": true,
+            "violations": 0,
+            "infeasibleDetected": true,
+            "note": "Regular placement is the analytical optimum for equal min-separation on a circle",
+            "pass": true
+          },
+          {
+            "id": "A4",
+            "label": "Perturbation robustness (snap recovery)",
+            "sigma": 0.05,
+            "meanPerturbDist": 0.05662680223624487,
+            "snapRecoveredMaxErr": 0,
+            "largeDeviations": 0,
+            "pass": true
+          }
+        ],
+        "allPass": true
+      },
+      "B": {
+        "family": "B",
+        "title": "Wave propagation (1D FDTD · periodic · analytical sinusoid)",
+        "equation": "u_tt = c^2 u_xx",
+        "scheme": "second-order centered FDTD · periodic BC · CFL c*dt/dx ≤ 1",
+        "b1": {
+          "id": "B1",
+          "finalL2": 0.0018976539832672216,
+          "finalLinf": 0.0026827440137283665,
+          "courant": 0.4,
+          "pass": true
+        },
+        "b2": {
+          "id": "B2",
+          "refinements": [
+            {
+              "nx": 32,
+              "dx": 0.03125,
+              "dt": 0.0125,
+              "nSteps": 40,
+              "l2": 0.0030021992874227185,
+              "linf": 0.004245740457691497
+            },
+            {
+              "nx": 64,
+              "dx": 0.015625,
+              "dt": 0.00625,
+              "nSteps": 80,
+              "l2": 0.0007496734862528849,
+              "linf": 0.0010601982553182056
+            },
+            {
+              "nx": 128,
+              "dx": 0.0078125,
+              "dt": 0.003125,
+              "nSteps": 160,
+              "l2": 0.00018736354424004728,
+              "linf": 0.00026497206297811825
+            },
+            {
+              "nx": 256,
+              "dx": 0.00390625,
+              "dt": 0.0015625,
+              "nSteps": 320,
+              "l2": 0.00004683745840741873,
+              "linf": 0.0000662381688854874
+            }
+          ],
+          "observedOrders": [
+            2.001685462644489,
+            2.0004221073882023,
+            2.000105575251746
+          ],
+          "meanObservedOrder": 2.0007377150948127,
+          "pass": true
+        },
+        "b3": {
+          "id": "B3",
+          "stableL2": 0.0032455556588065993,
+          "unstableL2": 2.5076753727150918e+26,
+          "unstableDiverges": true,
+          "pass": true
+        },
+        "b4": {
+          "id": "B4",
+          "energyDrift": 0.0004052266423670847,
+          "pass": true
+        },
+        "b5": {
+          "id": "B5",
+          "correlation": 0.9999964570006452,
+          "pass": true
+        },
+        "allPass": true
+      },
+      "C": {
+        "family": "C",
+        "title": "Phase coordination (Kuramoto)",
+        "syncThreshold": 0.95,
+        "c1": {
+          "id": "C1",
+          "rFinal": 1.0000000000000002,
+          "tSync": 4.3500000000000005,
+          "synced": true,
+          "pass": true
+        },
+        "c2": {
+          "id": "C2",
+          "mismatch": [
+            {
+              "K": 0.2,
+              "rFinal": 0.14715919447162698,
+              "synced": false,
+              "tSync": null
+            },
+            {
+              "K": 0.8,
+              "rFinal": 0.9670285958492142,
+              "synced": true,
+              "tSync": 8.85
+            },
+            {
+              "K": 1.5,
+              "rFinal": 0.9912473604334536,
+              "synced": true,
+              "tSync": 3.0500000000000003
+            },
+            {
+              "K": 3,
+              "rFinal": 0.9978520018344715,
+              "synced": true,
+              "tSync": 1.25
+            }
+          ],
+          "pass": true
+        },
+        "c3": {
+          "id": "C3",
+          "ring": {
+            "rFinal": 1,
+            "synced": true,
+            "tSync": 5.4
+          },
+          "complete": {
+            "rFinal": 0.9999999999999998,
+            "synced": true,
+            "tSync": 1.7000000000000002
+          },
+          "disconnected": {
+            "rFinal": 0.25625072990768955,
+            "synced": false
+          },
+          "pass": true
+        },
+        "c4": {
+          "id": "C4",
+          "rFinal": 1,
+          "tSync": 0,
+          "synced": true,
+          "pass": true
+        },
+        "c5": {
+          "id": "C5",
+          "fineR": 0.9999999999999999,
+          "coarseR": 0.9999999999999997,
+          "pass": true
+        },
+        "c6": {
+          "id": "C6",
+          "coupledR": 1.0000000000000002,
+          "independentR": 0.2562507299079465,
+          "pass": true
+        },
+        "allPass": true
+      },
+      "D": {
+        "family": "D",
+        "title": "Trajectory generation (2D point navigation · not manipulator / hardware)",
+        "scopeNote": "2D point robot · circular obstacles · grid collision check — not arm manipulation, not physical robots",
+        "nFixed": 4,
+        "nHeldOut": 24,
+        "heldSummary": {
+          "astar": {
+            "method": "A*",
+            "n": 24,
+            "successRate": 1,
+            "meanLength": 52.83918343834066,
+            "collisionRate": 0,
+            "meanIterations": 185.91666666666666
+          },
+          "wavePhase": {
+            "method": "WaveNode+phase",
+            "n": 24,
+            "successRate": 1,
+            "meanLength": 55.707034568538404,
+            "collisionRate": 0,
+            "meanIterations": 41.416666666666664
+          },
+          "waveAblation": {
+            "method": "WaveNode-ablation",
+            "n": 24,
+            "successRate": 1,
+            "meanLength": 55.765960133637286,
+            "collisionRate": 0,
+            "meanIterations": 41.458333333333336
+          }
+        },
+        "waveBeatsAstarLength": false,
+        "phaseHelpsVsAblation": true,
+        "sampleFixed": [
+          {
+            "tag": "fixed",
+            "mapIndex": 0,
+            "ok": true,
+            "path": [
+              {
+                "x": 1.5,
+                "y": 1.5
+              },
+              {
+                "x": 2.5,
+                "y": 2.5
+              },
+              {
+                "x": 3.5,
+                "y": 3.5
+              },
+              {
+                "x": 4.5,
+                "y": 4.5
+              },
+              {
+                "x": 5.5,
+                "y": 5.5
+              },
+              {
+                "x": 6.5,
+                "y": 6.5
+              },
+              {
+                "x": 7.5,
+                "y": 7.5
+              },
+              {
+                "x": 8.5,
+                "y": 8.5
+              },
+              {
+                "x": 9.5,
+                "y": 9.5
+              },
+              {
+                "x": 10.5,
+                "y": 10.5
+              },
+              {
+                "x": 11.5,
+                "y": 11.5
+              },
+              {
+                "x": 12.5,
+                "y": 12.5
+              },
+              {
+                "x": 13.5,
+                "y": 13.5
+              },
+              {
+                "x": 14.5,
+                "y": 14.5
+              },
+              {
+                "x": 15.5,
+                "y": 15.5
+              },
+              {
+                "x": 16.5,
+                "y": 15.5
+              },
+              {
+                "x": 17.5,
+                "y": 15.5
+              },
+              {
+                "x": 18.5,
+                "y": 15.5
+              },
+              {
+                "x": 19.5,
+                "y": 16.5
+              },
+              {
+                "x": 20.5,
+                "y": 16.5
+              },
+              {
+                "x": 21.5,
+                "y": 17.5
+              },
+              {
+                "x": 22.5,
+                "y": 18.5
+              },
+              {
+                "x": 23.5,
+                "y": 19.5
+              },
+              {
+                "x": 24.5,
+                "y": 20.5
+              },
+              {
+                "x": 25.5,
+                "y": 21.5
+              },
+              {
+                "x": 26.5,
+                "y": 22.5
+              },
+              {
+                "x": 27.5,
+                "y": 23.5
+              },
+              {
+                "x": 28.5,
+                "y": 24.5
+              },
+              {
+                "x": 29.5,
+                "y": 25.5
+              },
+              {
+                "x": 30.5,
+                "y": 26.5
+              },
+              {
+                "x": 31.5,
+                "y": 27.5
+              },
+              {
+                "x": 32.5,
+                "y": 28.5
+              },
+              {
+                "x": 33.5,
+                "y": 29.5
+              },
+              {
+                "x": 34.5,
+                "y": 30.5
+              },
+              {
+                "x": 35.5,
+                "y": 31.5
+              },
+              {
+                "x": 35.5,
+                "y": 32.5
+              },
+              {
+                "x": 36.5,
+                "y": 33.5
+              },
+              {
+                "x": 36.5,
+                "y": 34.5
+              },
+              {
+                "x": 37.5,
+                "y": 35.5
+              },
+              {
+                "x": 37.5,
+                "y": 36.5
+              },
+              {
+                "x": 37.5,
+                "y": 37.5
+              },
+              {
+                "x": 38,
+                "y": 38
+              }
+            ],
+            "length": 53.96194077712556,
+            "collisions": 0,
+            "iterations": 400,
+            "minClearance": 0.36220917347796977,
+            "method": "A*"
+          },
+          {
+            "tag": "fixed",
+            "mapIndex": 0,
+            "ok": true,
+            "path": [
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 2.5,
+                "y": 2.5
+              },
+              {
+                "x": 3.5,
+                "y": 3.5
+              },
+              {
+                "x": 4.5,
+                "y": 4.5
+              },
+              {
+                "x": 5.5,
+                "y": 5.5
+              },
+              {
+                "x": 6.5,
+                "y": 6.5
+              },
+              {
+                "x": 7.5,
+                "y": 7.5
+              },
+              {
+                "x": 8.5,
+                "y": 8.5
+              },
+              {
+                "x": 9.5,
+                "y": 9.5
+              },
+              {
+                "x": 9.5,
+                "y": 10.5
+              },
+              {
+                "x": 9.5,
+                "y": 11.5
+              },
+              {
+                "x": 9.5,
+                "y": 12.5
+              },
+              {
+                "x": 9.5,
+                "y": 13.5
+              },
+              {
+                "x": 9.5,
+                "y": 14.5
+              },
+              {
+                "x": 9.5,
+                "y": 15.5
+              },
+              {
+                "x": 9.5,
+                "y": 16.5
+              },
+              {
+                "x": 9.5,
+                "y": 17.5
+              },
+              {
+                "x": 9.5,
+                "y": 18.5
+              },
+              {
+                "x": 10.5,
+                "y": 19.5
+              },
+              {
+                "x": 10.5,
+                "y": 20.5
+              },
+              {
+                "x": 11.5,
+                "y": 21.5
+              },
+              {
+                "x": 11.5,
+                "y": 22.5
+              },
+              {
+                "x": 12.5,
+                "y": 23.5
+              },
+              {
+                "x": 13.5,
+                "y": 24.5
+              },
+              {
+                "x": 14.5,
+                "y": 25.5
+              },
+              {
+                "x": 15.5,
+                "y": 26.5
+              },
+              {
+                "x": 16.5,
+                "y": 27.5
+              },
+              {
+                "x": 17.5,
+                "y": 28.5
+              },
+              {
+                "x": 18.5,
+                "y": 29.5
+              },
+              {
+                "x": 19.5,
+                "y": 30.5
+              },
+              {
+                "x": 20.5,
+                "y": 31.5
+              },
+              {
+                "x": 21.5,
+                "y": 31.5
+              },
+              {
+                "x": 22.5,
+                "y": 31.5
+              },
+              {
+                "x": 23.5,
+                "y": 31.5
+              },
+              {
+                "x": 24.5,
+                "y": 32.5
+              },
+              {
+                "x": 25.5,
+                "y": 32.5
+              },
+              {
+                "x": 26.5,
+                "y": 32.5
+              },
+              {
+                "x": 27.5,
+                "y": 33.5
+              },
+              {
+                "x": 28.5,
+                "y": 33.5
+              },
+              {
+                "x": 29.5,
+                "y": 34.5
+              },
+              {
+                "x": 30.5,
+                "y": 34.5
+              },
+              {
+                "x": 31.5,
+                "y": 35.5
+              },
+              {
+                "x": 32.5,
+                "y": 35.5
+              },
+              {
+                "x": 33.5,
+                "y": 36.5
+              },
+              {
+                "x": 34.5,
+                "y": 36.5
+              },
+              {
+                "x": 35.5,
+                "y": 37.5
+              },
+              {
+                "x": 36.5,
+                "y": 37.5
+              },
+              {
+                "x": 37.5,
+                "y": 38.5
+              },
+              {
+                "x": 38,
+                "y": 38
+              }
+            ],
+            "length": 59.18376618407354,
+            "collisions": 0,
+            "iterations": 48,
+            "minClearance": 3.0377212609781212,
+            "method": "WaveNode+phase"
+          },
+          {
+            "tag": "fixed",
+            "mapIndex": 0,
+            "ok": true,
+            "path": [
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 2.5,
+                "y": 2.5
+              },
+              {
+                "x": 3.5,
+                "y": 3.5
+              },
+              {
+                "x": 4.5,
+                "y": 4.5
+              },
+              {
+                "x": 5.5,
+                "y": 5.5
+              },
+              {
+                "x": 6.5,
+                "y": 6.5
+              },
+              {
+                "x": 7.5,
+                "y": 7.5
+              },
+              {
+                "x": 8.5,
+                "y": 8.5
+              },
+              {
+                "x": 9.5,
+                "y": 9.5
+              },
+              {
+                "x": 9.5,
+                "y": 10.5
+              },
+              {
+                "x": 9.5,
+                "y": 11.5
+              },
+              {
+                "x": 9.5,
+                "y": 12.5
+              },
+              {
+                "x": 9.5,
+                "y": 13.5
+              },
+              {
+                "x": 9.5,
+                "y": 14.5
+              },
+              {
+                "x": 9.5,
+                "y": 15.5
+              },
+              {
+                "x": 9.5,
+                "y": 16.5
+              },
+              {
+                "x": 9.5,
+                "y": 17.5
+              },
+              {
+                "x": 9.5,
+                "y": 18.5
+              },
+              {
+                "x": 10.5,
+                "y": 19.5
+              },
+              {
+                "x": 10.5,
+                "y": 20.5
+              },
+              {
+                "x": 11.5,
+                "y": 21.5
+              },
+              {
+                "x": 11.5,
+                "y": 22.5
+              },
+              {
+                "x": 12.5,
+                "y": 23.5
+              },
+              {
+                "x": 13.5,
+                "y": 24.5
+              },
+              {
+                "x": 14.5,
+                "y": 25.5
+              },
+              {
+                "x": 15.5,
+                "y": 26.5
+              },
+              {
+                "x": 16.5,
+                "y": 27.5
+              },
+              {
+                "x": 17.5,
+                "y": 28.5
+              },
+              {
+                "x": 18.5,
+                "y": 29.5
+              },
+              {
+                "x": 19.5,
+                "y": 30.5
+              },
+              {
+                "x": 20.5,
+                "y": 31.5
+              },
+              {
+                "x": 21.5,
+                "y": 31.5
+              },
+              {
+                "x": 22.5,
+                "y": 31.5
+              },
+              {
+                "x": 23.5,
+                "y": 31.5
+              },
+              {
+                "x": 24.5,
+                "y": 32.5
+              },
+              {
+                "x": 25.5,
+                "y": 32.5
+              },
+              {
+                "x": 26.5,
+                "y": 32.5
+              },
+              {
+                "x": 27.5,
+                "y": 33.5
+              },
+              {
+                "x": 28.5,
+                "y": 33.5
+              },
+              {
+                "x": 29.5,
+                "y": 33.5
+              },
+              {
+                "x": 30.5,
+                "y": 34.5
+              },
+              {
+                "x": 31.5,
+                "y": 35.5
+              },
+              {
+                "x": 32.5,
+                "y": 35.5
+              },
+              {
+                "x": 33.5,
+                "y": 36.5
+              },
+              {
+                "x": 34.5,
+                "y": 36.5
+              },
+              {
+                "x": 35.5,
+                "y": 37.5
+              },
+              {
+                "x": 36.5,
+                "y": 37.5
+              },
+              {
+                "x": 37.5,
+                "y": 38.5
+              },
+              {
+                "x": 38,
+                "y": 38
+              }
+            ],
+            "length": 59.18376618407354,
+            "collisions": 0,
+            "iterations": 48,
+            "minClearance": 3.0377212609781212,
+            "method": "WaveNode-ablation"
+          }
+        ],
+        "allPass": true,
+        "interpretation": "A* remains the stronger global path-length baseline. Phase’s matched role is a small steering delta on harmonic ascent (same success/collisions; tiny length Δ vs ablation)—foundational coordination bias, not a planner that must beat A*.",
+        "phaseRole": "steering_delta"
+      },
+      "E": {
+        "family": "E",
+        "title": "Computational cost and scaling",
+        "nodePlace": [
+          {
+            "n": 256,
+            "ms": 0.048437000000149055
+          },
+          {
+            "n": 1024,
+            "ms": 0.3284559999999601
+          },
+          {
+            "n": 4096,
+            "ms": 0.5659350000000813
+          },
+          {
+            "n": 16384,
+            "ms": 5.473169999999982
+          },
+          {
+            "n": 65536,
+            "ms": 29.310195999999905
+          }
+        ],
+        "wave": [
+          {
+            "n": 16,
+            "ms": 0.11531200000013087
+          },
+          {
+            "n": 32,
+            "ms": 0.05365000000006148
+          },
+          {
+            "n": 64,
+            "ms": 0.0744760000000042
+          },
+          {
+            "n": 128,
+            "ms": 0.15240799999992305
+          }
+        ],
+        "kuramoto": [
+          {
+            "n": 16,
+            "ms": 2.130527999999913
+          },
+          {
+            "n": 32,
+            "ms": 7.151992999999948
+          },
+          {
+            "n": 40,
+            "ms": 8.774988000000121
+          }
+        ],
+        "plan": [
+          {
+            "nObs": 2,
+            "astarMs": 0.20527799999990748,
+            "waveMs": 1.8269860000000335
+          },
+          {
+            "nObs": 4,
+            "astarMs": 0.8122280000000046,
+            "waveMs": 1.686640000000125
+          },
+          {
+            "nObs": 6,
+            "astarMs": 0.6466270000000804,
+            "waveMs": 1.6847540000001118
+          },
+          {
+            "nObs": 8,
+            "astarMs": 0.46746399999983623,
+            "waveMs": 2.2437130000000707
+          }
+        ],
+        "note": "Wall-clock on this host; not an asymptotic proof. Warm single-shot timings.",
+        "allPass": true
+      },
+      "summary": {
+        "A_pass": true,
+        "B_pass": true,
+        "C_pass": true,
+        "D_pass": true,
+        "E_pass": true,
+        "mathValidated": true,
+        "planningRunnable": true,
+        "waveBeatsAstarLength": false,
+        "phaseHelpsVsAblation": true,
+        "enginePinRecommended": true,
+        "familiesPass": 5,
+        "familiesTotal": 5
+      }
+    },
+    "experiments": [
+      {
+        "id": "E1",
+        "title": "Node placement geometric reconstruction (A1–A4)",
+        "pass": true,
+        "cases": [
+          {
+            "id": "A1",
+            "label": "Regular 2D lattice",
+            "nodeCount": 20,
+            "expectNodes": 20,
+            "edgeCount": 31,
+            "expectEdges": 31,
+            "maxCoordErr": 0,
+            "meanCoordErr": 0,
+            "pass": true
+          },
+          {
+            "id": "A2",
+            "label": "Regular polygon / circle",
+            "n": 12,
+            "maxCoordErr": 0,
+            "meanCoordErr": 0,
+            "rotationRadiusMaxDev": 2.220446049250313e-16,
+            "scaleRadiusMaxDev": 8.881784197001252e-16,
+            "pass": true
+          },
+          {
+            "id": "A3",
+            "label": "Constrained circle min-separation",
+            "chord": 0.7653668647301796,
+            "feasible": true,
+            "violations": 0,
+            "infeasibleDetected": true,
+            "note": "Regular placement is the analytical optimum for equal min-separation on a circle",
+            "pass": true
+          },
+          {
+            "id": "A4",
+            "label": "Perturbation robustness (snap recovery)",
+            "sigma": 0.05,
+            "meanPerturbDist": 0.05662680223624487,
+            "snapRecoveredMaxErr": 0,
+            "largeDeviations": 0,
+            "pass": true
+          }
+        ],
+        "interpretation": "Lattice, circle, constrained placement, and snap recovery match analytical references within tolerance.",
+        "evidence": "numerically_verified"
+      },
+      {
+        "id": "E2",
+        "title": "1D FDTD wave analytical agreement + convergence + stability (B1–B5)",
+        "pass": true,
+        "b1": {
+          "id": "B1",
+          "finalL2": 0.0018976539832672216,
+          "finalLinf": 0.0026827440137283665,
+          "courant": 0.4,
+          "pass": true
+        },
+        "b2": {
+          "id": "B2",
+          "refinements": [
+            {
+              "nx": 32,
+              "dx": 0.03125,
+              "dt": 0.0125,
+              "nSteps": 40,
+              "l2": 0.0030021992874227185,
+              "linf": 0.004245740457691497
+            },
+            {
+              "nx": 64,
+              "dx": 0.015625,
+              "dt": 0.00625,
+              "nSteps": 80,
+              "l2": 0.0007496734862528849,
+              "linf": 0.0010601982553182056
+            },
+            {
+              "nx": 128,
+              "dx": 0.0078125,
+              "dt": 0.003125,
+              "nSteps": 160,
+              "l2": 0.00018736354424004728,
+              "linf": 0.00026497206297811825
+            },
+            {
+              "nx": 256,
+              "dx": 0.00390625,
+              "dt": 0.0015625,
+              "nSteps": 320,
+              "l2": 0.00004683745840741873,
+              "linf": 0.0000662381688854874
+            }
+          ],
+          "observedOrders": [
+            2.001685462644489,
+            2.0004221073882023,
+            2.000105575251746
+          ],
+          "meanObservedOrder": 2.0007377150948127,
+          "pass": true
+        },
+        "b3": {
+          "id": "B3",
+          "stableL2": 0.0032455556588065993,
+          "unstableL2": 2.5076753727150918e+26,
+          "unstableDiverges": true,
+          "pass": true
+        },
+        "b4": {
+          "id": "B4",
+          "energyDrift": 0.0004052266423670847,
+          "pass": true
+        },
+        "b5": {
+          "id": "B5",
+          "correlation": 0.9999964570006452,
+          "pass": true
+        },
+        "interpretation": "Observed mean convergence order ≈ 2.00; CFL violation diverges as expected.",
+        "evidence": "numerically_verified"
+      },
+      {
+        "id": "E3",
+        "title": "Kuramoto phase coordination (C1–C6)",
+        "pass": true,
+        "c1": {
+          "id": "C1",
+          "rFinal": 1.0000000000000002,
+          "tSync": 4.3500000000000005,
+          "synced": true,
+          "pass": true
+        },
+        "c2": {
+          "id": "C2",
+          "mismatch": [
+            {
+              "K": 0.2,
+              "rFinal": 0.14715919447162698,
+              "synced": false,
+              "tSync": null
+            },
+            {
+              "K": 0.8,
+              "rFinal": 0.9670285958492142,
+              "synced": true,
+              "tSync": 8.85
+            },
+            {
+              "K": 1.5,
+              "rFinal": 0.9912473604334536,
+              "synced": true,
+              "tSync": 3.0500000000000003
+            },
+            {
+              "K": 3,
+              "rFinal": 0.9978520018344715,
+              "synced": true,
+              "tSync": 1.25
+            }
+          ],
+          "pass": true
+        },
+        "c3": {
+          "id": "C3",
+          "ring": {
+            "rFinal": 1,
+            "synced": true,
+            "tSync": 5.4
+          },
+          "complete": {
+            "rFinal": 0.9999999999999998,
+            "synced": true,
+            "tSync": 1.7000000000000002
+          },
+          "disconnected": {
+            "rFinal": 0.25625072990768955,
+            "synced": false
+          },
+          "pass": true
+        },
+        "c4": {
+          "id": "C4",
+          "rFinal": 1,
+          "tSync": 0,
+          "synced": true,
+          "pass": true
+        },
+        "c5": {
+          "id": "C5",
+          "fineR": 0.9999999999999999,
+          "coarseR": 0.9999999999999997,
+          "pass": true
+        },
+        "c6": {
+          "id": "C6",
+          "coupledR": 1.0000000000000002,
+          "independentR": 0.2562507299079465,
+          "pass": true
+        },
+        "interpretation": "Connected identical-frequency oscillators sync; disconnected graph does not; K=0 baseline stays below threshold.",
+        "evidence": "numerically_verified"
+      },
+      {
+        "id": "E4",
+        "title": "2D trajectory planning vs A* + phase ablation (D)",
+        "pass": true,
+        "heldSummary": {
+          "astar": {
+            "method": "A*",
+            "n": 24,
+            "successRate": 1,
+            "meanLength": 52.83918343834066,
+            "collisionRate": 0,
+            "meanIterations": 185.91666666666666
+          },
+          "wavePhase": {
+            "method": "WaveNode+phase",
+            "n": 24,
+            "successRate": 1,
+            "meanLength": 55.707034568538404,
+            "collisionRate": 0,
+            "meanIterations": 41.416666666666664
+          },
+          "waveAblation": {
+            "method": "WaveNode-ablation",
+            "n": 24,
+            "successRate": 1,
+            "meanLength": 55.765960133637286,
+            "collisionRate": 0,
+            "meanIterations": 41.458333333333336
+          }
+        },
+        "waveBeatsAstarLength": false,
+        "phaseHelpsVsAblation": true,
+        "interpretation": "A* remains the stronger global path-length baseline. Phase’s matched role is a small steering delta on harmonic ascent (same success/collisions; tiny length Δ vs ablation)—foundational coordination bias, not a planner that must beat A*.",
+        "evidence": "empirically_observed",
+        "honesty": "2D point navigation only — not manipulator, multi-robot hardware, or physical Wave–Node Robotics product proof. Phase = steering/coordination delta."
+      },
+      {
+        "id": "E5",
+        "title": "Computational cost / scaling (E)",
+        "pass": true,
+        "nodePlace": [
+          {
+            "n": 256,
+            "ms": 0.048437000000149055
+          },
+          {
+            "n": 1024,
+            "ms": 0.3284559999999601
+          },
+          {
+            "n": 4096,
+            "ms": 0.5659350000000813
+          },
+          {
+            "n": 16384,
+            "ms": 5.473169999999982
+          },
+          {
+            "n": 65536,
+            "ms": 29.310195999999905
+          }
+        ],
+        "wave": [
+          {
+            "n": 16,
+            "ms": 0.11531200000013087
+          },
+          {
+            "n": 32,
+            "ms": 0.05365000000006148
+          },
+          {
+            "n": 64,
+            "ms": 0.0744760000000042
+          },
+          {
+            "n": 128,
+            "ms": 0.15240799999992305
+          }
+        ],
+        "kuramoto": [
+          {
+            "n": 16,
+            "ms": 2.130527999999913
+          },
+          {
+            "n": 32,
+            "ms": 7.151992999999948
+          },
+          {
+            "n": 40,
+            "ms": 8.774988000000121
+          }
+        ],
+        "plan": [
+          {
+            "nObs": 2,
+            "astarMs": 0.20527799999990748,
+            "waveMs": 1.8269860000000335
+          },
+          {
+            "nObs": 4,
+            "astarMs": 0.8122280000000046,
+            "waveMs": 1.686640000000125
+          },
+          {
+            "nObs": 6,
+            "astarMs": 0.6466270000000804,
+            "waveMs": 1.6847540000001118
+          },
+          {
+            "nObs": 8,
+            "astarMs": 0.46746399999983623,
+            "waveMs": 2.2437130000000707
+          }
+        ],
+        "interpretation": "Wall-clock scaling recorded; not an asymptotic complexity proof.",
+        "evidence": "empirically_observed"
+      }
+    ],
+    "n_pass": 5,
+    "n_total": 5,
+    "all_pass": true,
+    "enginePinRecommended": true
+  },
+  "dependencyVersions": {
+    "node": "v22.23.4",
+    "platform": "linux"
+  }
+}
